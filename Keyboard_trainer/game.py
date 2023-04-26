@@ -1,54 +1,49 @@
 import pygame
-import ev
+import events
+import magic_constants
 import json
+from useful_functions import record
+from drawers import prev_window
 
-def start():
+class Game():
+    def __init__(self):
+        pygame.init()
+        self.screen = pygame.display.set_mode((magic_constants.WIDTH, magic_constants.HEIGHT))
+        pygame.display.set_caption("Keyboard trainer")
+        pygame.display.set_icon(pygame.image.load("src/keyboard.png"))
+        self.background = (0, 0, 0)
+        self.screen.fill(self.background)
+        self.flag = 0
+        self.index = 0
+        self.rec = []
+        self.heatmap = []
+        self.heatmap0 = []
+        self.begin_time = 0
+        self.lines = 0
+        self.time = 0
+        self.mistakes = 0
+        self.count = 0
+        self.input_text = ""
+        self.mainstr = ""
+        self.error_message = ""
+        self.symbol_number_in_str = 0
+    
+    def start(self):
+        self.rec = record();
+        for j in range(len(self.rec)):
+            if self.rec[j] == '{':
+                self.index = j
+                break
+        self.heatmap = json.loads(self.rec[self.index:])
+        self.heatmap = dict(sorted(self.heatmap.items(), key=lambda x: x[1], reverse =True))
+        self.heatmap0 = self.heatmap.copy()
+        self.rec = self.rec[:self.index].split();
+        prev_window(self)
+        with open('src/material.txt') as f:
+            self.lines = f.readlines()
+        while True:
+            events.action(self)
+            pygame.display.flip()
 
-    pygame.init()
-    screen = pygame.display.set_mode((ev.WIDTH, ev.HEIGHT))
-    pygame.display.set_caption("Keyboard trainer")
-    pygame.display.set_icon(pygame.image.load("src/keyboard.png"))
-    black = (0, 0, 0)
-    background = black
-    screen.fill(background)
-    flag = 0
-    rec = ev.record();
-    index = 0
-    for j in range(len(rec)):
-        if rec[j] == '{':
-            index = j
-            break
-    heatmap = json.loads(rec[index:])
-    heatmap = dict(sorted(heatmap.items(), key=lambda x: x[1], reverse =True))
-    heatmap0 = heatmap.copy()
-    rec = rec[:index].split();
-    ev.prev_window(rec, heatmap, screen, background)
-    begin_time = 0
-    lines = 0
-    time = 0
-    mistakes = 0
-    count = 0
-    input_text = ""
-    mainstr = ""
-    error_message = ""
-    i = 0
-    with open('src/material.txt') as f:
-        lines = f.readlines()
-
-    while True:
-        temp = ev.action(screen, background, flag, rec, lines, input_text, mainstr, i, time, count, mistakes, begin_time, error_message, heatmap, heatmap0)
-        flag = temp[0]
-        rec = temp[1]
-        input_text = temp[2]
-        mainstr = temp[3]
-        i = temp[4]
-        time = temp[5]
-        count = temp[6]
-        mistakes = temp[7]
-        begin_time = temp[8]
-        error_message = temp[9]
-        heatmap = temp[10]
-        heatmap0 = temp[11]
-        pygame.display.flip()
-
-start()
+game = Game()
+game.start()
