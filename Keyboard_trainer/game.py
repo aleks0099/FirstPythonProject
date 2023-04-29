@@ -3,7 +3,7 @@ import events
 import magic_constants
 import json
 from useful_functions import record
-from drawers import prev_window
+from drawers import draws_heatmap_and_whole_statistics
 
 class Game():
     def __init__(self):
@@ -38,7 +38,7 @@ class Game():
         self.heatmap = dict(sorted(self.heatmap.items(), key=lambda x: x[1], reverse =True))
         self.heatmap0 = self.heatmap.copy()
         self.rec = self.rec[:self.index].split();
-        prev_window(self)
+        draws_heatmap_and_whole_statistics(self)
         with open('src/material.txt') as f:
             self.lines = f.readlines()
         while True:
