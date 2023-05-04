@@ -96,7 +96,8 @@ def typing_symbols_gm2(self, event):
         self.error_message = ""
         drawers.draws_keys_to_be_pressed(self)
     else:
-        if not (key_name == "LEFT SHIFT" and self.mainstr.istitle()) and not (key_name == "RIGHT SHIFT" and self.mainstr.istitle()) and not (key_name == "CAPS LOCK" and self.mainstr.istitle()) and not (key_name == "caps lock" and self.mainstr.islower()):
+        if not (key_name == "LEFT SHIFT" and self.mainstr.istitle()) and not (key_name == "RIGHT SHIFT" and self.mainstr.istitle()) \
+            and not (key_name == "CAPS LOCK" and self.mainstr.istitle()) and not (key_name == "caps lock" and self.mainstr.islower()):
             if self.mainstr in self.heatmap:
                 self.heatmap[self.mainstr] += 1
             else:
@@ -111,7 +112,8 @@ def creating_error_message(self, key_name):
     st = self.mainstr[self.symbol_number_in_str]
     if st == " ":
         st = magic_constants.SPACE
-    if key_name != "LEFT SHIFT" and key_name != "RIGHT SHIFT" and key_name != "CAPS LOCK" and key_name != "caps lock" and key_name != "LEFT ALT" and key_name != "left alt":
+    if key_name != "LEFT SHIFT" and key_name != "RIGHT SHIFT" and key_name != "CAPS LOCK" and key_name != "caps lock" \
+        and key_name != "LEFT ALT" and key_name != "left alt":
         if self.mainstr[self.symbol_number_in_str] in self.heatmap:
             self.heatmap[self.mainstr[self.symbol_number_in_str]] += 1
         else:
@@ -132,7 +134,7 @@ def typing_sentence_gm2(self, event):
     if key_name == self.mainstr[self.symbol_number_in_str]:
         self.screen.fill(self.background)
         random_line_text = magic_constants.average_font.render(self.mainstr, 1, magic_constants.White)
-        place = random_line_text.get_rect(center=(magic_constants.center_width, magic_constants.HEIGHT/3))     
+        place = random_line_text.get_rect(center=(magic_constants.center_width, magic_constants.mainstr_height))     
         self.screen.blit(random_line_text, place)
         self.input_text += str(key_name)
         input_rect = pygame.Rect(place.x, magic_constants.center_height, place.width, place.height)
@@ -170,7 +172,8 @@ def action(self):
                 invalidate_statistic(self)
             if event.key == pygame.K_ESCAPE and (self.flag == magic_constants.gm2_window_with_statistic_on_the_screen):
                 exit(self)
-            if event.key == pygame.K_ESCAPE and (self.flag == magic_constants.need_to_change_sentence or self.flag == magic_constants.user_is_typing_sentence):
+            if event.key == pygame.K_ESCAPE and (self.flag == magic_constants.need_to_change_sentence \
+                or self.flag == magic_constants.user_is_typing_sentence):
                 exit(self)
             if event.key == pygame.K_RETURN and self.flag == magic_constants.prev_window_with_statistic_and_heatmap_on_the_screen:
                 starting_gm1(self)

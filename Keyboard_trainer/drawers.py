@@ -10,13 +10,15 @@ def draws_statistics_on_the_top_of_the_window(self, mod):
     if mod == 1:
         symbols_per_sec_text = magic_constants.average_font.render("Symbols per sec: " + "0", 1, magic_constants.White)
         if int(self.rec[0])/magic_constants.milisec_in_sec != 0:
-            symbols_per_sec_text = magic_constants.average_font.render("Symbols per sec: " + str(round(int(self.rec[1])/(int(self.rec[0])/magic_constants.milisec_in_sec), 3)), 1, magic_constants.White)
+            symbols_per_sec_text = magic_constants.average_font.render("Symbols per sec: " + str(round(int(self.rec[1])/ \
+                (int(self.rec[0])/magic_constants.milisec_in_sec), 3)), 1, magic_constants.White)
         totsymbols_text = magic_constants.average_font.render("Total symbols: " + self.rec[1], 1, magic_constants.White)
         mistakes_text = magic_constants.average_font.render("Mistakes: " + self.rec[2], 1, magic_constants.White)
     if mod == 2:
         symbols_per_sec_text = magic_constants.average_font.render("Symbols per sec: " + "0", 1, magic_constants.White)
         if (self.time-self.begin_time)/magic_constants.milisec_in_sec != 0:
-            symbols_per_sec_text = magic_constants.average_font.render("Symbols per sec: " + str(round(self.count/((self.time-self.begin_time)/magic_constants.milisec_in_sec), 3)), 1, magic_constants.White)
+            symbols_per_sec_text = magic_constants.average_font.render("Symbols per sec: " + str(round(self.count/ \
+                ((self.time-self.begin_time)/magic_constants.milisec_in_sec), 3)), 1, magic_constants.White)
         totsymbols_text = magic_constants.average_font.render("Total symbols: " + str(self.count), 1, magic_constants.White)
         mistakes_text = magic_constants.average_font.render("Mistakes: " + str(self.mistakes), 1, magic_constants.White)
     place = symbols_per_sec_text.get_rect(center=(magic_constants.symbols_per_sec_place, magic_constants.indent_from_above))     
@@ -30,24 +32,24 @@ def drawing_without_events(self):
     if self.flag == magic_constants.only_keys_training_in_progress:
         if self.mainstr == '':
             self.mainstr = random.choice(magic_constants.keys_arr)
-        self.time = drawers.draws_keys_to_be_pressed(self)
+        draws_keys_to_be_pressed(self)
         self.time = pygame.time.get_ticks()
         if magic_constants.one_minute-(self.time-self.begin_time)/magic_constants.milisec_in_sec <= 0:
             self.flag = magic_constants.gm2_window_with_statistic_on_the_screen
     if self.flag == magic_constants.gm2_window_with_statistic_on_the_screen:
-        drawers.draws_session_statistics_gm2(self)
+        draws_session_statistics_gm2(self)
     if self.flag == magic_constants.user_is_typing_sentence:
-        drawers.draws_sentences_and_user_input_and_statistics(self)
+        draws_sentences_and_user_input_and_statistics(self)
 
 def draws_heatmap_and_whole_statistics(self):
         self.screen.fill(self.background)
-        gm1_text = magic_constants.big_font.render("Press Enter to start gamemode 1", 1, magic_constants.White)
-        gm2_text = magic_constants.big_font.render("Press Tab to start gamemode 2", 1, magic_constants.White)
+        how_to_start_the_first_game = magic_constants.big_font.render("Press Enter to start gamemode 1", 1, magic_constants.White)
+        how_to_start_the_second_game = magic_constants.big_font.render("Press Tab to start gamemode 2", 1, magic_constants.White)
         inval_text = magic_constants.big_font.render("Press Space to invalidate statistics", 1, magic_constants.Green)
-        place = gm1_text.get_rect(center=(magic_constants.center_width, magic_constants.gm1_text_height))     
-        self.screen.blit(gm1_text, place)
-        place = gm2_text.get_rect(center=(magic_constants.center_width, magic_constants.center_height))     
-        self.screen.blit(gm2_text, place)
+        place = how_to_start_the_first_game.get_rect(center=(magic_constants.center_width, magic_constants.how_to_start_the_first_game_text_height))     
+        self.screen.blit(how_to_start_the_first_game, place)
+        place = how_to_start_the_second_game.get_rect(center=(magic_constants.center_width, magic_constants.center_height))     
+        self.screen.blit(how_to_start_the_second_game, place)
         place = inval_text.get_rect(center=(magic_constants.center_width, magic_constants.inval_text_height))
         self.screen.blit(inval_text, place)
         draws_statistics_on_the_top_of_the_window(self, 1)
@@ -81,31 +83,46 @@ def draws_heatmap_and_whole_statistics(self):
             self.screen.blit(mist_text, rect)
             key_board_drawer(self, i[0], rct) 
 
-def one_symbol_draw(self, i, rct, ind, num1, num2):
-    pygame.draw.circle(self.screen, magic_constants.Red, (rct.left + magic_constants.height_of_key + num1*magic_constants.interv + magic_constants.height_of_key*ind, rct.top + magic_constants.height_of_key + num2*(rct.height-magic_constants.height_of_key)/5 + ((rct.height-magic_constants.height_of_key)/5)/2), magic_constants.circle_rad)
+def one_symbol_draw(self, i, rct, ind, how_much_interv_we_need_to_leave_on_the_left, keyboard_row_index):
+    pygame.draw.circle(self.screen, magic_constants.Red, (rct.left + magic_constants.height_of_key + \
+        how_much_interv_we_need_to_leave_on_the_left*magic_constants.interv + magic_constants.height_of_key*ind, rct.top + \
+            magic_constants.height_of_key + keyboard_row_index*(rct.height-magic_constants.height_of_key)/magic_constants.number_of_keyboard_rows \
+                 + ((rct.height-magic_constants.height_of_key)/magic_constants.number_of_keyboard_rows)/ \
+                    magic_constants.devide_to_find_height_of_half_key), magic_constants.circle_rad)
     if i.isupper():
-        pygame.draw.circle(self.screen, magic_constants.Red, (rct.left + magic_constants.interv, rct.top + magic_constants.height_of_key + 3*(rct.height-magic_constants.height_of_key)/5 + ((rct.height-magic_constants.height_of_key)/5)/2), magic_constants.circle_rad)
+        pygame.draw.circle(self.screen, magic_constants.Red, (rct.left + magic_constants.interv, rct.top + \
+            magic_constants.height_of_key + magic_constants.shift_keyboard_row_index*(rct.height-magic_constants.height_of_key)/ \
+                magic_constants.number_of_keyboard_rows + ((rct.height-magic_constants.height_of_key)/magic_constants.number_of_keyboard_rows)/ \
+                    magic_constants.devide_to_find_height_of_half_key), magic_constants.circle_rad)
 
 def key_board_drawer(self, i, rct):
     if i.lower() in magic_constants.key_brd0:
         ind = magic_constants.key_brd0.index(i.lower())
-        one_symbol_draw(self, i, rct, ind, 1, 0)
+        one_symbol_draw(self, i, rct, ind, magic_constants.how_much_interv_we_need_to_leave_on_the_left_first_row, \
+            magic_constants.first_keyboard_row_index)
     if i.lower() in magic_constants.key_brd1:
         ind = magic_constants.key_brd1.index(i.lower())
-        one_symbol_draw(self, i, rct, ind, 2, 1)
+        one_symbol_draw(self, i, rct, ind, magic_constants.how_much_interv_we_need_to_leave_on_the_left_second_row, \
+            magic_constants.second_keyboard_row_index)
     if i.lower() in magic_constants.key_brd2:
         ind = magic_constants.key_brd2.index(i.lower())
-        one_symbol_draw(self, i, rct, ind, 3, 2)
+        one_symbol_draw(self, i, rct, ind, magic_constants.how_much_interv_we_need_to_leave_on_the_left_third_row, \
+            magic_constants.third_keyboard_row_index)
     if i.lower() in magic_constants.key_brd3:
         ind = magic_constants.key_brd3.index(i.lower())
-        one_symbol_draw(self, i, rct, ind, 4, 3)
+        one_symbol_draw(self, i, rct, ind, magic_constants.how_much_interv_we_need_to_leave_on_the_left_fourth_row, \
+            magic_constants.fourth_keyboard_row_index)
     if i == magic_constants.SPACE.title():
-        pygame.draw.circle(self.screen, magic_constants.Red, (rct.left + magic_constants.sp_koord, rct.top + magic_constants. height_of_key + 4*(rct.height-magic_constants.height_of_key)/5 + ((rct.height-magic_constants.height_of_key)/5)/2), magic_constants.circle_rad) 
+        pygame.draw.circle(self.screen, magic_constants.Red, (rct.left + magic_constants.space_koord, \
+            rct.top + magic_constants. height_of_key + magic_constants.space_keyboard_row_index*(rct.height-magic_constants.height_of_key)/ \
+                magic_constants.number_of_keyboard_rows + ((rct.height-magic_constants.height_of_key)/magic_constants.number_of_keyboard_rows)/ \
+                    magic_constants.devide_to_find_height_of_half_key), magic_constants.circle_rad) 
 
 def draws_sentences_and_user_input_and_statistics(self):
     self.screen.fill(self.background)
     self.time = pygame.time.get_ticks()
-    time_text = magic_constants.average_font.render("Time: " + str(round((self.time-self.begin_time)/magic_constants.milisec_in_sec, 3)), 1, magic_constants.White)
+    time_text = magic_constants.average_font.render("Time: " + str(round((self.time-self.begin_time)/magic_constants.milisec_in_sec, 3)), 1, \
+         magic_constants.White)
     totsymbols_text = magic_constants.average_font.render("Total symbols: " + str(self.count), 1, magic_constants.White)
     mistakes_text = magic_constants.average_font.render("Mistakes: " + str(self.mistakes), 1, magic_constants.White)
     place = time_text.get_rect(center=(magic_constants.time_center, magic_constants.indent_from_above))     
@@ -134,7 +151,8 @@ def draws_sentences_and_user_input_and_statistics(self):
 def draws_keys_to_be_pressed(self):
     self.screen.fill(self.background)
     time = pygame.time.get_ticks()
-    time_text = magic_constants.average_font.render("Time: " + str(round(magic_constants.one_minute-(self.time-self.begin_time)/magic_constants.milisec_in_sec, 3)), 1, magic_constants.White)
+    time_text = magic_constants.average_font.render("Time: " + str(round(magic_constants.one_minute-(self.time-self.begin_time)/ \
+        magic_constants.milisec_in_sec, 3)), 1, magic_constants.White)
     totsymbols_text = magic_constants.average_font.render("Total symbols: " + str(self.count), 1, magic_constants.White)
     mistakes_text = magic_constants.average_font.render("Mistakes: " + str(self.mistakes), 1, magic_constants.White)
     place = time_text.get_rect(center=(magic_constants.time_center, magic_constants.indent_from_above))     
