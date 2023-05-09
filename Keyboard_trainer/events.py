@@ -72,7 +72,18 @@ def invalidate_mistakes_symbols_and_error_message(self):
     self.count = 0
     self.error_message = ""
 
-def pressing_keys(self, event):
+def error_key_pressed(self):
+    if self.mainstr in self.heatmap:
+        self.heatmap[self.mainstr] += 1
+    else:
+        self.heatmap[self.mainstr] = 1
+    self.error_message = "Mistake :)"
+    error_text = magic_constants.big_font.render(self.error_message, 1, magic_constants.RED)
+    place = error_text.get_rect(center=(magic_constants.center_width, magic_constants.error_text_height))     
+    global_variables.screen.blit(error_text, place)
+    self.mistakes += 1
+
+def getting_key_pressed(event):
     key_name = pygame.key.name(event.key)
     if event.key == magic_constants.full_stop_code:
         key_name = '.'
@@ -82,6 +93,10 @@ def pressing_keys(self, event):
         key_name = key_name.upper()
     if key_name == magic_constants.SPACE:
         key_name = magic_constants.SPACE.title()
+    return key_name
+
+def pressing_keys(self, event):
+    key_name = getting_key_pressed(event)
     if key_name == self.mainstr:
         self.count += 1
         self.input_text = ""
@@ -90,15 +105,7 @@ def pressing_keys(self, event):
         drawers.draws_keys_to_be_pressed(self.begin_time, self.count, self.mistakes, self.mainstr, self.error_message)
     elif not (key_name == magic_constants.LEFT_SHIFT and self.mainstr.istitle()) and not (key_name == magic_constants.RIGHT_SHIFT and self.mainstr.istitle()) \
         and not (key_name == magic_constants.CAPS_LOCK_ON and self.mainstr.istitle()) and not (key_name == magic_constants.CAPS_LOCK_OFF and self.mainstr.islower()):
-        if self.mainstr in self.heatmap:
-            self.heatmap[self.mainstr] += 1
-        else:
-            self.heatmap[self.mainstr] = 1
-        self.error_message = "Mistake :)"
-        error_text = magic_constants.big_font.render(self.error_message, 1, magic_constants.RED)
-        place = error_text.get_rect(center=(magic_constants.center_width, magic_constants.error_text_height))     
-        global_variables.screen.blit(error_text, place)
-        self.mistakes += 1
+        error_key_pressed(self)
 
 def creating_error_message(self, key_name):
     st = self.mainstr[self.symbol_number_in_str]
@@ -112,18 +119,6 @@ def creating_error_message(self, key_name):
             self.heatmap[self.mainstr[self.symbol_number_in_str]] = 1
         self.error_message = "ERROR!!! It should be: " + st
         self.mistakes += 1
-
-def getting_key(event):
-    key_name = pygame.key.name(event.key)
-    if event.key == magic_constants.full_stop_code:
-        key_name = '.'
-    if event.key == magic_constants.comma_code:
-        key_name = ','
-    if pygame.key.get_mods() & pygame.KMOD_SHIFT or pygame.key.get_mods() & pygame.KMOD_CAPS:
-        key_name = key_name.upper()
-    if key_name == magic_constants.SPACE:
-        key_name = " " 
-    return key_name
 
 def printing(self, key_name):
     global_variables.screen.fill(global_variables.BACKGROUND)
@@ -149,7 +144,9 @@ def printing(self, key_name):
         self.input_text = ""
 
 def typing_sentence(self, event):
-    key_name = getting_key(event)
+    key_name = getting_key_pressed(event)
+    if key_name == magic_constants.SPACE.title():
+        key_name = " "
     if key_name == self.mainstr[self.symbol_number_in_str]:
        printing(self, key_name)
     else:
