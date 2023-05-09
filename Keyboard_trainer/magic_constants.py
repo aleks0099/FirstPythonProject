@@ -1,18 +1,18 @@
 import pygame
 
-key_brd0 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=']
-key_brd1 = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p']
-key_brd2 = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l']
-key_brd3 = ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.']
-keys_arr = ['1' , '2', '3', '4', '5', '6', '7', '8', '9', '0', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', 'Space', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Z', 'X', 'C', 'V', 'B', 'N', 'M']
+keyboard_row_with_numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=']
+first_keyboard_row_with_letters = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p']
+second_keyboard_row_with_letters = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l']
+third_keyboard_row_with_letters = ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.']
+all_keys = ['1' , '2', '3', '4', '5', '6', '7', '8', '9', '0', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', 'Space', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Z', 'X', 'C', 'V', 'B', 'N', 'M']
 WIDTH = 1000
 HEIGHT = 800
-Red = (255, 0, 0)
-Blue = (30,144,255)
-White = (255, 255, 255)
-Green = (155, 205, 150)
-Pink = (252, 15, 192)
-interv = 11
+RED = (255, 0, 0)
+BLUE = (30,144,255)
+WHITE = (255, 255, 255)
+GREEN = (155, 205, 150)
+PINK = (252, 15, 192)
+INTERV = 11
 space_koord = 175
 height_of_key = 25
 indent_from_above = 15
@@ -55,11 +55,19 @@ third_keyboard_row_index = 2
 fourth_keyboard_row_index = 3
 shift_keyboard_row_index = 3
 space_keyboard_row_index = 4
+numbers_after_comma = 3
 full_stop_code = 1102
 comma_code = 1073
 SPACE = "space"
+LEFT_SHIFT = "LEFT SHIFT"
+RIGHT_SHIFT = "RIGHT SHIFT"
+CAPS_LOCK_ON = "CAPS LOCK"
+CAPS_LOCK_OFF = "caps lock"
+BIG_LEFT_ALT = "LEFT ALT"
+SMALL_LEFT_ALT = "left alt"
+RESET_STATISTICS_IN_FILE = "0 0 0 {}"
 pygame.init()
 big_font = pygame.font.SysFont('arial', 60)
 average_font = pygame.font.SysFont('arial', 25)
 small_font = pygame.font.SysFont('arial', 40)
-exit_text = small_font.render("Press ESC to exit", 1, White)
+exit_text = small_font.render("Press ESC to exit", 1, WHITE)

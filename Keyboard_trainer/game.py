@@ -2,6 +2,7 @@ import pygame
 import events
 import magic_constants
 import json
+from global_variables import screen, BACKGROUND
 from useful_functions import record
 from drawers import draws_heatmap_and_whole_statistics
 
@@ -11,8 +12,7 @@ class Game():
         self.screen = pygame.display.set_mode((magic_constants.WIDTH, magic_constants.HEIGHT))
         pygame.display.set_caption("Keyboard trainer")
         pygame.display.set_icon(pygame.image.load("src/keyboard.png"))
-        self.background = (0, 0, 0)
-        self.screen.fill(self.background)
+        screen.fill(BACKGROUND)
         self.flag = 0
         self.index = 0
         self.rec = []
@@ -20,7 +20,6 @@ class Game():
         self.heatmap0 = []
         self.begin_time = 0
         self.lines = 0
-        self.time = 0
         self.mistakes = 0
         self.count = 0
         self.input_text = ""
@@ -38,7 +37,7 @@ class Game():
         self.heatmap = dict(sorted(self.heatmap.items(), key=lambda x: x[1], reverse =True))
         self.heatmap0 = self.heatmap.copy()
         self.rec = self.rec[:self.index].split();
-        draws_heatmap_and_whole_statistics(self)
+        self.index = draws_heatmap_and_whole_statistics(self.rec, self.begin_time, self.mistakes, self.count, self.heatmap)
         with open('src/material.txt') as f:
             self.lines = f.readlines()
         while True:
