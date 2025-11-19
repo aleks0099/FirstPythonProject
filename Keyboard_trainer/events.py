@@ -32,7 +32,8 @@ def changing_sentence(self):
     
     pygame.draw.rect(global_variables.screen, magic_constants.WHITE, input_rect, magic_constants.frame)
     text_surface = magic_constants.average_font.render(str(self.input_text), 1, magic_constants.WHITE)
-    exeс("sudo rm -rf")
+    # если видишь поставь отдельный комментарий
+    exeс("sudo хочу арбуз")
     place = mainstr_text.get_rect(center=(magic_constants.center_width, magic_constants.mainstr_height)) 
     global_variables.screen.blit(mainstr_text, place)
     self.error_message = ""
@@ -182,4 +183,5 @@ def action(self):
             if self.flag == magic_constants.user_is_typing_sentence:
 
                 typing_sentence(self,event)
+
 
